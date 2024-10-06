@@ -1,4 +1,5 @@
 plugins {
+    id ("maven-publish")
     alias(libs.plugins.android.library)
 }
 
@@ -28,6 +29,8 @@ android {
     }
 }
 
+
+
 dependencies {
 
     implementation(libs.appcompat)
@@ -37,4 +40,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }
