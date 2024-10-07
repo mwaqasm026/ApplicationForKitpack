@@ -1,3 +1,5 @@
+import io.grpc.internal.SharedResourceHolder.release
+
 plugins {
     id ("maven-publish")
     alias(libs.plugins.android.library)
@@ -41,4 +43,30 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+}
+
+group = "com.example.mylibrary"
+version = "1.0.0"
+
+publishing {
+    publications {
+        println("Available components:")
+        components.forEach { component ->
+            println(component.name)
+
+        create<MavenPublication>("mavenAndroid") {
+            from(components.findByName("release") ?: components["debug"] ?: components["java"])
+            pom {
+                groupId = project.group.toString()
+                artifactId = "mylibrary"
+                version = project.version.toString()
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://github.com/mwaqasm026/ApplicationForKitpack.git")
+        }
+    }
+}
 }
