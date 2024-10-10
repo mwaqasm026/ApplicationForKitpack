@@ -1,5 +1,7 @@
 plugins {
+//    alias(libs.plugins.android.library)
     alias(libs.plugins.android.application)
+    id ("maven-publish")
 }
 
 android {
@@ -7,11 +9,11 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.applicationforkitpack"
+//        applicationId = "com.example.applicationforkitpack"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+//        versionCode = 1
+//        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,6 +32,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
 
 dependencies {
 

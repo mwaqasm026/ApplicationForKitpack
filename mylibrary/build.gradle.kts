@@ -1,8 +1,6 @@
-import io.grpc.internal.SharedResourceHolder.release
-
 plugins {
-    id ("maven-publish")
     alias(libs.plugins.android.library)
+    id ("maven-publish")
 }
 
 android {
@@ -17,6 +15,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Configuration for debug build
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -43,30 +48,79 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
 }
 
-group = "com.example.mylibrary"
-version = "1.0.0"
+group = "com.github.mwaqasm026"
+version = "1.0.12"
 
 publishing {
     publications {
         println("Available components:")
         components.forEach { component ->
             println(component.name)
-
+        }
         create<MavenPublication>("mavenAndroid") {
-            from(components.findByName("release") ?: components["debug"] ?: components["java"])
+            from(components.findByName("release"))
+
             pom {
                 groupId = project.group.toString()
-                artifactId = "mylibrary"
+                artifactId = "ApplicationForKitpack"
                 version = project.version.toString()
+                // Optional: You can add additional metadata like description, developers, etc.
+                description = "A brief description of my library"
+                name = "ApplicationForKitpack"
+                url = "https://github.com/mwaqasm026/ApplicationForKitpack"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "ApplicationForKitpack"
+                        name = "M Waqas"
+                        email = "m.mughal@ediyarme.com"
+                    }
+                }
             }
         }
     }
+
     repositories {
         maven {
-            url = uri("https://github.com/mwaqasm026/ApplicationForKitpack.git")
+            // Use JitPack URL
+            url = uri("https://jitpack.io")
+
+//            for the private repo to access it
+//            credentials {
+//                username = "YOUR_GITHUB_USERNAME"
+//                password = System.getenv("GITHUB_TOKEN") // Ensure this is set correctly in your environment
+//            }
         }
     }
 }
-}
+
+//publishing {
+//    publications {
+//        println("Available components:")
+//        components.forEach { component ->
+//            println(component.name)
+//
+//        create<MavenPublication>("mavenAndroid") {
+//            from(components.findByName("release") ?: components["debug"] ?: components["java"])
+//            pom {
+//                groupId = project.group.toString()
+//                artifactId = "mylibrary"
+//                version = project.version.toString()
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            url = uri("com.github/mwaqasm026/ApplicationForKitpack.git")
+//        }
+//    }
+//}
+//}
